@@ -96,16 +96,24 @@ def shortest_path(source, target):
     PSUDOCODE
 
     I need:
-        - frontier for the UNexplored neighbors
-        - Empty set for the EXPLORED nodes
-        - initial state (first actor node)
-        - track actions and transitions
-        - goal test
-        - path cost function
+        - [x] frontier for the UNexplored neighbors
+        - [x] Empty set for the EXPLORED nodes
+        - [x] initial state (first actor node)
+        - [ ] track actions and transitions
+        - [ ] goal test
+        - [ ] path cost function
     """
+    first_actor = Node(state=source, parent=None, action=None)
+    goal_actor = target
+    frontier = QueueFrontier()
+    explored = set()
 
-    # TODO
-    raise NotImplementedError
+    print(f"First Actor: #{initial_state.state}, #{initial_state.parent}, #{initial_state.action}")
+
+    # Add the first actor to the list of UNEXPLORED nodes
+    # Who are the neighbors? >> Use the neighbors_for_person method
+
+    
 
 
 def person_id_for_name(name):
