@@ -70,8 +70,8 @@ def main():
     # if target is None:
     #     sys.exit("Person not found.")
 
-    source = person_id_for_name("Sally Field")
-    target = person_id_for_name("Valeria Golino")
+    source = person_id_for_name("Sally Field") #ID 398
+    target = person_id_for_name("Valeria Golino") #ID 420
 
     path = shortest_path(source, target)
 
@@ -132,28 +132,23 @@ def shortest_path(source, target):
             if person_id in explored:
                 continue
             # If it's not the goal, made a node
-            if person_id != goal_actor:
+            if person_id != goal_actor: # Written this way, I'm not actually adding that last node.
                 child = Node(state=person_id, parent=node, action=movie_id)
                 frontier.add(child)
             else:
-                path = []
-                path.append([node.action,node.state])
+                path = [[movie_id, person_id]]
+                pdb.set_trace()
                 while node.parent != None:
                     path.append([node.action,node.state])
                     node = node.parent # Having this before the append was canceling my while statement.
 
                     # Insert and ruby unshift are different.
                     # That's why the instructor told us to reverse the value.
+                pdb.set_trace()
+                return path
+                # I can't just call path.reverse because it creates a different object type.
+                # Like when I was trying to call an index on a set.
 
-                return path.reverse
-                # How should I reconstruct the path backwards?
-
-
-
-    
-
-
-    
 
 
 def person_id_for_name(name):
