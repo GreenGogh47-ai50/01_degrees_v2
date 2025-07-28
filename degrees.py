@@ -96,13 +96,12 @@ def shortest_path(source, target):
     PSUDOCODE
 
     I need:
-        - frontier (new empty set to hold explored nodes)
+        - frontier for the UNexplored neighbors
+        - Empty set for the EXPLORED nodes
         - initial state (first actor node)
         - track actions and transitions
         - goal test
         - path cost function
-
-
     """
 
     # TODO
