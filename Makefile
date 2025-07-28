@@ -1,5 +1,5 @@
 run:
-	python3 degrees.py small
+	python3 degrees.py
 
 lint:
 	style50 degrees.py

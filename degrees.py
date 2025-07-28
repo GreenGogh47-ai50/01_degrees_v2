@@ -63,24 +63,18 @@ def main():
     load_data(directory)
     print("Data loaded.")
 
-    # source = person_id_for_name(input("Name: "))
-    # if source is None:
-    #     sys.exit("Person not found.")
-    # target = person_id_for_name(input("Name: "))
-    # if target is None:
-    #     sys.exit("Person not found.")
-
-    source = person_id_for_name("Sally Field") #ID 398
-    target = person_id_for_name("Valeria Golino") #ID 420
+    source = person_id_for_name(input("Name: "))
+    if source is None:
+        sys.exit("Person not found.")
+    target = person_id_for_name(input("Name: "))
+    if target is None:
+        sys.exit("Person not found.")
 
     path = shortest_path(source, target)
-
-    # Must output as ([movie, name], [movie, name], [movie, name])
 
     if path is None:
         print("Not connected.")
     else:
-        pdb.set_trace()
         degrees = len(path)
         print(f"{degrees} degrees of separation.")
         path = [(None, source)] + path
@@ -92,70 +86,34 @@ def main():
 
 
 def shortest_path(source, target):
-    """
-    INSTRUCTIONS
-    Returns the shortest list of (movie_id, person_id) pairs
-    that connect the source to the target.
-
-    If no possible path, returns None.
-
-    # ===========================================
-    PSUDOCODE
-
-    I need:
-        - [x] frontier for the UNexplored neighbors
-        - [x] Empty set for the EXPLORED nodes
-        - [x] initial state (first actor node)
-        - [ ] track actions and transitions
-        - [ ] goal test
-        - [ ] path cost function
-    """
     first_actor = Node(state=source, parent=None, action=None)
     goal_actor = target
     frontier = QueueFrontier()
     explored = set()
     frontier.add(first_actor)
 
-    print(f"First Actor: #{first_actor.state}, #{first_actor.parent}, #{first_actor.action}")
-
-    # Add the first actor to the list of UNEXPLORED nodes
-
     while frontier.empty() == False:
         node = frontier.remove()
         explored.add(node.state)
 
-        # Get the neighboring actors, iterate through them
-
         for movie_id, person_id in neighbors_for_person(node.state):
-            print(f"movie_id: #{movie_id}, person_id: #{person_id}")
-            # Skip if explored
+
             if person_id in explored:
                 continue
-            # If it's not the goal, made a node
-            if person_id != goal_actor: # Written this way, I'm not actually adding that last node.
+
+            if person_id != goal_actor:
                 child = Node(state=person_id, parent=node, action=movie_id)
                 frontier.add(child)
+
             else:
                 path = [[movie_id, person_id]]
-                pdb.set_trace()
                 while node.parent != None:
                     path.append([node.action,node.state])
-                    node = node.parent # Having this before the append was canceling my while statement.
+                    node = node.parent
 
-                    # Insert and ruby unshift are different.
-                    # That's why the instructor told us to reverse the value.
-                pdb.set_trace()
                 return path
-                # I can't just call path.reverse because it creates a different object type.
-                # Like when I was trying to call an index on a set.
-
-
 
 def person_id_for_name(name):
-    """
-    Returns the IMDB id for a person's name,
-    resolving ambiguities as needed.
-    """
     person_ids = list(names.get(name.lower(), set()))
     if len(person_ids) == 0:
         return None
@@ -178,10 +136,6 @@ def person_id_for_name(name):
 
 
 def neighbors_for_person(person_id):
-    """
-    Returns (movie_id, person_id) pairs for people
-    who starred with a given person.
-    """
     movie_ids = people[person_id]["movies"]
     neighbors = set()
     for movie_id in movie_ids:
