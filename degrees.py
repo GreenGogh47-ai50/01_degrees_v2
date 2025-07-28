@@ -86,10 +86,23 @@ def main():
 
 def shortest_path(source, target):
     """
+    INSTRUCTIONS
     Returns the shortest list of (movie_id, person_id) pairs
     that connect the source to the target.
 
     If no possible path, returns None.
+
+    # ===========================================
+    PSUDOCODE
+
+    I need:
+        - frontier (new empty set to hold explored nodes)
+        - initial state (first actor node)
+        - track actions and transitions
+        - goal test
+        - path cost function
+
+
     """
 
     # TODO
