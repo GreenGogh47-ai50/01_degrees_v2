@@ -108,12 +108,19 @@ def shortest_path(source, target):
     frontier = QueueFrontier()
     explored = set()
 
-    print(f"First Actor: #{initial_state.state}, #{initial_state.parent}, #{initial_state.action}")
+    print(f"First Actor: #{first_actor.state}, #{first_actor.parent}, #{first_actor.action}")
 
     # Add the first actor to the list of UNEXPLORED nodes
     # Who are the neighbors? >> Use the neighbors_for_person method
 
-    
+    frontier.add(first_actor)
+
+    node = frontier.remove()
+    explored.add(node.state)
+    connections = neighbors_for_person(node.state)
+
+    print(f"Neighbors: #{connections}") #returning (movie_id, person_id)
+
 
 
 def person_id_for_name(name):
