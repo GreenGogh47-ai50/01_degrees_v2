@@ -70,8 +70,8 @@ def main():
     # if target is None:
     #     sys.exit("Person not found.")
 
-    source = person_id_for_name("398")
-    target = person_id_for_name("420")
+    source = person_id_for_name("Sally Field")
+    target = person_id_for_name("Valeria Golino")
 
     path = shortest_path(source, target)
 
@@ -134,15 +134,16 @@ def shortest_path(source, target):
             if person_id != goal_actor:
                 child = Node(state=person_id, parent=node, action=movie_id)
                 frontier.add(child)
-            # else:
-            #     path = []
-            #     path.append([node.action,node.state])
-            #     pdb.set_trace()
-            #     while node.parent != None:
-            #         node = node.parent
-            #         path.insert([node.action,node.state])
+            else:
+                pdb.set_trace()
+                path = []
+                path.append([node.action,node.state])
+                while node.parent != None:
+                    node = node.parent
+                    path.insert(0,[node.action,node.state])
+                    pdb.set_trace()
 
-            #     return path
+                return path
                 # How should I reconstruct the path backwards?
 
 
