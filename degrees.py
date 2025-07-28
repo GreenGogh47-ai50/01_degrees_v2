@@ -1,5 +1,6 @@
 import csv
 import sys
+import pdb
 
 from util import Node, StackFrontier, QueueFrontier
 
@@ -62,14 +63,19 @@ def main():
     load_data(directory)
     print("Data loaded.")
 
-    source = person_id_for_name(input("Name: "))
-    if source is None:
-        sys.exit("Person not found.")
-    target = person_id_for_name(input("Name: "))
-    if target is None:
-        sys.exit("Person not found.")
+    # source = person_id_for_name(input("Name: "))
+    # if source is None:
+    #     sys.exit("Person not found.")
+    # target = person_id_for_name(input("Name: "))
+    # if target is None:
+    #     sys.exit("Person not found.")
+
+    source = person_id_for_name("398")
+    target = person_id_for_name("420")
 
     path = shortest_path(source, target)
+
+    # Must output as ([movie, name], [movie, name], [movie, name])
 
     if path is None:
         print("Not connected.")
@@ -107,20 +113,44 @@ def shortest_path(source, target):
     goal_actor = target
     frontier = QueueFrontier()
     explored = set()
+    frontier.add(first_actor)
 
     print(f"First Actor: #{first_actor.state}, #{first_actor.parent}, #{first_actor.action}")
 
     # Add the first actor to the list of UNEXPLORED nodes
-    # Who are the neighbors? >> Use the neighbors_for_person method
 
-    frontier.add(first_actor)
+    while frontier.empty() == False:
+        node = frontier.remove()
+        explored.add(node.state)
 
-    node = frontier.remove()
-    explored.add(node.state)
-    connections = neighbors_for_person(node.state)
+        # Get the neighboring actors, iterate through them
 
-    print(f"Neighbors: #{connections}") #returning (movie_id, person_id)
+        for movie_id, person_id in neighbors_for_person(node.state):
+            print(f"movie_id: #{movie_id}, person_id: #{person_id}")
+            # Skip if explored
+            if person_id in explored:
+                continue
+            # If it's not the goal, made a node
+            if person_id != goal_actor:
+                child = Node(state=person_id, parent=node, action=movie_id)
+                frontier.add(child)
+            # else:
+            #     path = []
+            #     path.append([node.action,node.state])
+            #     pdb.set_trace()
+            #     while node.parent != None:
+            #         node = node.parent
+            #         path.insert([node.action,node.state])
 
+            #     return path
+                # How should I reconstruct the path backwards?
+
+
+
+    
+
+
+    
 
 
 def person_id_for_name(name):

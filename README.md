@@ -33,7 +33,3 @@ In class we covered these algorithms:
   - Greedy best-first search: I don't see a way to 'map' the actors on a grid, so I don't see a way to create a "heuristic function" (or estimate) of how far away the goal is.
   - A* Search: A modification of greedy best-first, so I can't use this.
   - Minimax: This is for games with an opponent (like tic-tac-toe), so this will be useful in the next project!
-
-## Other Ruby to Python learnings
-- `nil` and `None` are different.
-- 
