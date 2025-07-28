@@ -88,6 +88,10 @@ def shortest_path(source, target):
     explored = set()
     frontier.add(first_actor)
 
+    # Find a path of length 0
+    if source == target:
+        return []
+
     # Add the first actor to the list of UNEXPLORED nodes
 
     while frontier.empty() == False:
