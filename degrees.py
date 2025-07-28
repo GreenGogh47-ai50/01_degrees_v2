@@ -80,6 +80,7 @@ def main():
     if path is None:
         print("Not connected.")
     else:
+        pdb.set_trace()
         degrees = len(path)
         print(f"{degrees} degrees of separation.")
         path = [(None, source)] + path
@@ -135,15 +136,16 @@ def shortest_path(source, target):
                 child = Node(state=person_id, parent=node, action=movie_id)
                 frontier.add(child)
             else:
-                pdb.set_trace()
                 path = []
                 path.append([node.action,node.state])
                 while node.parent != None:
-                    node = node.parent
-                    path.insert(0,[node.action,node.state])
-                    pdb.set_trace()
+                    path.append([node.action,node.state])
+                    node = node.parent # Having this before the append was canceling my while statement.
 
-                return path
+                    # Insert and ruby unshift are different.
+                    # That's why the instructor told us to reverse the value.
+
+                return path.reverse
                 # How should I reconstruct the path backwards?
 
 
