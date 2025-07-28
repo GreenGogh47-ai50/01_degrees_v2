@@ -1,6 +1,5 @@
 import csv
 import sys
-import pdb
 
 from util import Node, StackFrontier, QueueFrontier
 
@@ -15,9 +14,6 @@ movies = {}
 
 
 def load_data(directory):
-    """
-    Load data from CSV files into memory.
-    """
     # Load people
     with open(f"{directory}/people.csv", encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -92,26 +88,35 @@ def shortest_path(source, target):
     explored = set()
     frontier.add(first_actor)
 
+    # Add the first actor to the list of UNEXPLORED nodes
+
     while frontier.empty() == False:
         node = frontier.remove()
         explored.add(node.state)
 
-        for movie_id, person_id in neighbors_for_person(node.state):
+        # Get the neighboring actors, iterate through them
 
+        for movie_id, person_id in neighbors_for_person(node.state):
+            # Skip if explored
             if person_id in explored:
                 continue
-
+            # If it's not the goal, made a node
+            # Written this way, I'm not actually adding that last node.
             if person_id != goal_actor:
                 child = Node(state=person_id, parent=node, action=movie_id)
                 frontier.add(child)
-
             else:
-                path = [[movie_id, person_id]]
+                path = [(movie_id, person_id)]
                 while node.parent != None:
-                    path.append([node.action,node.state])
+                    path.append((node.action, node.state))
+                    # Having this before the append was canceling my while statement.
                     node = node.parent
+                
+                # Must reverse the path, because insert didn't work as expected.
 
+                path.reverse() 
                 return path
+
 
 def person_id_for_name(name):
     person_ids = list(names.get(name.lower(), set()))
@@ -136,6 +141,10 @@ def person_id_for_name(name):
 
 
 def neighbors_for_person(person_id):
+    """
+    Returns (movie_id, person_id) pairs for people
+    who starred with a given person.
+    """
     movie_ids = people[person_id]["movies"]
     neighbors = set()
     for movie_id in movie_ids:
